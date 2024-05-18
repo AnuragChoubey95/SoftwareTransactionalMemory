@@ -1,0 +1,185 @@
+Comparing STM vs. Mutex
+
+Mode: -m, CollectStats: 0, NUM_THREADS: 2, NUM_NODES_PER_THREAD: 5, NUM_RUNS: 100
+Average Relative time ratio STM vs (m) over 100 runs: .02530
+----------------------------------------------------------------------------------
+Mode: -m, CollectStats: 0, NUM_THREADS: 4, NUM_NODES_PER_THREAD: 5, NUM_RUNS: 100
+Average Relative time ratio STM vs (m) over 100 runs: .02900
+----------------------------------------------------------------------------------
+Mode: -m, CollectStats: 0, NUM_THREADS: 8, NUM_NODES_PER_THREAD: 5, NUM_RUNS: 100
+Average Relative time ratio STM vs (m) over 100 runs: .03090
+----------------------------------------------------------------------------------
+Mode: -m, CollectStats: 0, NUM_THREADS: 10, NUM_NODES_PER_THREAD: 5, NUM_RUNS: 100
+Average Relative time ratio STM vs (m) over 100 runs: .03070
+----------------------------------------------------------------------------------
+Mode: -m, CollectStats: 0, NUM_THREADS: 11, NUM_NODES_PER_THREAD: 5, NUM_RUNS: 100
+Average Relative time ratio STM vs (m) over 100 runs: .03080
+----------------------------------------------------------------------------------
+Mode: -m, CollectStats: 0, NUM_THREADS: 12, NUM_NODES_PER_THREAD: 5, NUM_RUNS: 100
+Average Relative time ratio STM vs (m) over 100 runs: .03250
+----------------------------------------------------------------------------------
+Mode: -m, CollectStats: 0, NUM_THREADS: 2, NUM_NODES_PER_THREAD: 10, NUM_RUNS: 100
+Average Relative time ratio STM vs (m) over 100 runs: .02800
+----------------------------------------------------------------------------------
+Mode: -m, CollectStats: 0, NUM_THREADS: 4, NUM_NODES_PER_THREAD: 10, NUM_RUNS: 100
+Average Relative time ratio STM vs (m) over 100 runs: .02970
+----------------------------------------------------------------------------------
+Mode: -m, CollectStats: 0, NUM_THREADS: 8, NUM_NODES_PER_THREAD: 10, NUM_RUNS: 100
+Average Relative time ratio STM vs (m) over 100 runs: .03260
+----------------------------------------------------------------------------------
+Mode: -m, CollectStats: 0, NUM_THREADS: 10, NUM_NODES_PER_THREAD: 10, NUM_RUNS: 100
+Average Relative time ratio STM vs (m) over 100 runs: .03520
+----------------------------------------------------------------------------------
+Mode: -m, CollectStats: 0, NUM_THREADS: 11, NUM_NODES_PER_THREAD: 10, NUM_RUNS: 100
+Average Relative time ratio STM vs (m) over 100 runs: .03790
+----------------------------------------------------------------------------------
+Mode: -m, CollectStats: 0, NUM_THREADS: 12, NUM_NODES_PER_THREAD: 10, NUM_RUNS: 100
+Average Relative time ratio STM vs (m) over 100 runs: .04000
+----------------------------------------------------------------------------------
+Mode: -m, CollectStats: 0, NUM_THREADS: 2, NUM_NODES_PER_THREAD: 20, NUM_RUNS: 100
+Average Relative time ratio STM vs (m) over 100 runs: .02800
+----------------------------------------------------------------------------------
+Mode: -m, CollectStats: 0, NUM_THREADS: 4, NUM_NODES_PER_THREAD: 20, NUM_RUNS: 100
+Average Relative time ratio STM vs (m) over 100 runs: .03230
+----------------------------------------------------------------------------------
+Mode: -m, CollectStats: 0, NUM_THREADS: 8, NUM_NODES_PER_THREAD: 20, NUM_RUNS: 100
+Average Relative time ratio STM vs (m) over 100 runs: .06730
+----------------------------------------------------------------------------------
+Mode: -m, CollectStats: 0, NUM_THREADS: 10, NUM_NODES_PER_THREAD: 20, NUM_RUNS: 100
+Average Relative time ratio STM vs (m) over 100 runs: .78040
+----------------------------------------------------------------------------------
+Mode: -m, CollectStats: 0, NUM_THREADS: 11, NUM_NODES_PER_THREAD: 20, NUM_RUNS: 100
+Average Relative time ratio STM vs (m) over 100 runs: 4.47590
+----------------------------------------------------------------------------------
+Mode: -m, CollectStats: 0, NUM_THREADS: 12, NUM_NODES_PER_THREAD: 20, NUM_RUNS: 100
+Average Relative time ratio STM vs (m) over 100 runs: 12.50810
+----------------------------------------------------------------------------------
+Mode: -m, CollectStats: 0, NUM_THREADS: 2, NUM_NODES_PER_THREAD: 35, NUM_RUNS: 100
+Average Relative time ratio STM vs (m) over 100 runs: .02940
+----------------------------------------------------------------------------------
+Mode: -m, CollectStats: 0, NUM_THREADS: 4, NUM_NODES_PER_THREAD: 35, NUM_RUNS: 100
+Average Relative time ratio STM vs (m) over 100 runs: .04120
+----------------------------------------------------------------------------------
+Mode: -m, CollectStats: 0, NUM_THREADS: 8, NUM_NODES_PER_THREAD: 35, NUM_RUNS: 100
+Average Relative time ratio STM vs (m) over 100 runs: 9.52790
+----------------------------------------------------------------------------------
+Mode: -m, CollectStats: 0, NUM_THREADS: 10, NUM_NODES_PER_THREAD: 35, NUM_RUNS: 100
+Execution timed out for NUM_THREADS=10, NUM_NODES_PER_THREAD=35
+----------------------------------------------------------------------------------
+Mode: -m, CollectStats: 0, NUM_THREADS: 11, NUM_NODES_PER_THREAD: 35, NUM_RUNS: 100
+Execution timed out for NUM_THREADS=11, NUM_NODES_PER_THREAD=35
+----------------------------------------------------------------------------------
+Mode: -m, CollectStats: 0, NUM_THREADS: 12, NUM_NODES_PER_THREAD: 35, NUM_RUNS: 100
+Execution timed out for NUM_THREADS=12, NUM_NODES_PER_THREAD=35
+----------------------------------------------------------------------------------
+Mode: -m, CollectStats: 0, NUM_THREADS: 2, NUM_NODES_PER_THREAD: 50, NUM_RUNS: 100
+Average Relative time ratio STM vs (m) over 100 runs: .03220
+----------------------------------------------------------------------------------
+Mode: -m, CollectStats: 0, NUM_THREADS: 4, NUM_NODES_PER_THREAD: 50, NUM_RUNS: 100
+Average Relative time ratio STM vs (m) over 100 runs: .07300
+----------------------------------------------------------------------------------
+Mode: -m, CollectStats: 0, NUM_THREADS: 8, NUM_NODES_PER_THREAD: 50, NUM_RUNS: 100
+Execution timed out for NUM_THREADS=8, NUM_NODES_PER_THREAD=50
+----------------------------------------------------------------------------------
+Mode: -m, CollectStats: 0, NUM_THREADS: 10, NUM_NODES_PER_THREAD: 50, NUM_RUNS: 100
+Execution timed out for NUM_THREADS=10, NUM_NODES_PER_THREAD=50
+----------------------------------------------------------------------------------
+Mode: -m, CollectStats: 0, NUM_THREADS: 11, NUM_NODES_PER_THREAD: 50, NUM_RUNS: 100
+Execution timed out for NUM_THREADS=11, NUM_NODES_PER_THREAD=50
+----------------------------------------------------------------------------------
+Mode: -m, CollectStats: 0, NUM_THREADS: 12, NUM_NODES_PER_THREAD: 50, NUM_RUNS: 100
+Execution timed out for NUM_THREADS=12, NUM_NODES_PER_THREAD=50
+----------------------------------------------------------------------------------
+
+Comparing STM vs. Fine Grained
+
+Mode: -f, CollectStats: 0, NUM_THREADS: 2, NUM_NODES_PER_THREAD: 5, NUM_RUNS: 100
+Average Relative time ratio STM vs (f) over 100 runs: .02670
+----------------------------------------------------------------------------------
+Mode: -f, CollectStats: 0, NUM_THREADS: 4, NUM_NODES_PER_THREAD: 5, NUM_RUNS: 100
+Average Relative time ratio STM vs (f) over 100 runs: .02900
+----------------------------------------------------------------------------------
+Mode: -f, CollectStats: 0, NUM_THREADS: 8, NUM_NODES_PER_THREAD: 5, NUM_RUNS: 100
+Average Relative time ratio STM vs (f) over 100 runs: .03060
+----------------------------------------------------------------------------------
+Mode: -f, CollectStats: 0, NUM_THREADS: 10, NUM_NODES_PER_THREAD: 5, NUM_RUNS: 100
+Average Relative time ratio STM vs (f) over 100 runs: .03190
+----------------------------------------------------------------------------------
+Mode: -f, CollectStats: 0, NUM_THREADS: 11, NUM_NODES_PER_THREAD: 5, NUM_RUNS: 100
+Average Relative time ratio STM vs (f) over 100 runs: .03170
+----------------------------------------------------------------------------------
+Mode: -f, CollectStats: 0, NUM_THREADS: 12, NUM_NODES_PER_THREAD: 5, NUM_RUNS: 100
+Average Relative time ratio STM vs (f) over 100 runs: .03150
+----------------------------------------------------------------------------------
+Mode: -f, CollectStats: 0, NUM_THREADS: 2, NUM_NODES_PER_THREAD: 10, NUM_RUNS: 100
+Average Relative time ratio STM vs (f) over 100 runs: .02720
+----------------------------------------------------------------------------------
+Mode: -f, CollectStats: 0, NUM_THREADS: 4, NUM_NODES_PER_THREAD: 10, NUM_RUNS: 100
+Average Relative time ratio STM vs (f) over 100 runs: .02960
+----------------------------------------------------------------------------------
+Mode: -f, CollectStats: 0, NUM_THREADS: 8, NUM_NODES_PER_THREAD: 10, NUM_RUNS: 100
+Average Relative time ratio STM vs (f) over 100 runs: .03300
+----------------------------------------------------------------------------------
+Mode: -f, CollectStats: 0, NUM_THREADS: 10, NUM_NODES_PER_THREAD: 10, NUM_RUNS: 100
+Average Relative time ratio STM vs (f) over 100 runs: .03450
+----------------------------------------------------------------------------------
+Mode: -f, CollectStats: 0, NUM_THREADS: 11, NUM_NODES_PER_THREAD: 10, NUM_RUNS: 100
+Average Relative time ratio STM vs (f) over 100 runs: .03760
+----------------------------------------------------------------------------------
+Mode: -f, CollectStats: 0, NUM_THREADS: 12, NUM_NODES_PER_THREAD: 10, NUM_RUNS: 100
+Average Relative time ratio STM vs (f) over 100 runs: .04040
+----------------------------------------------------------------------------------
+Mode: -f, CollectStats: 0, NUM_THREADS: 2, NUM_NODES_PER_THREAD: 20, NUM_RUNS: 100
+Average Relative time ratio STM vs (f) over 100 runs: .02880
+----------------------------------------------------------------------------------
+Mode: -f, CollectStats: 0, NUM_THREADS: 4, NUM_NODES_PER_THREAD: 20, NUM_RUNS: 100
+Average Relative time ratio STM vs (f) over 100 runs: .03190
+----------------------------------------------------------------------------------
+Mode: -f, CollectStats: 0, NUM_THREADS: 8, NUM_NODES_PER_THREAD: 20, NUM_RUNS: 100
+Average Relative time ratio STM vs (f) over 100 runs: .07440
+----------------------------------------------------------------------------------
+Mode: -f, CollectStats: 0, NUM_THREADS: 10, NUM_NODES_PER_THREAD: 20, NUM_RUNS: 100
+Average Relative time ratio STM vs (f) over 100 runs: .76770
+----------------------------------------------------------------------------------
+Mode: -f, CollectStats: 0, NUM_THREADS: 11, NUM_NODES_PER_THREAD: 20, NUM_RUNS: 100
+Average Relative time ratio STM vs (f) over 100 runs: 3.82630
+----------------------------------------------------------------------------------
+Mode: -f, CollectStats: 0, NUM_THREADS: 12, NUM_NODES_PER_THREAD: 20, NUM_RUNS: 100
+Execution timed out for NUM_THREADS=12, NUM_NODES_PER_THREAD=20
+----------------------------------------------------------------------------------
+Mode: -f, CollectStats: 0, NUM_THREADS: 2, NUM_NODES_PER_THREAD: 35, NUM_RUNS: 100
+Average Relative time ratio STM vs (f) over 100 runs: .03020
+----------------------------------------------------------------------------------
+Mode: -f, CollectStats: 0, NUM_THREADS: 4, NUM_NODES_PER_THREAD: 35, NUM_RUNS: 100
+Average Relative time ratio STM vs (f) over 100 runs: .04060
+----------------------------------------------------------------------------------
+Mode: -f, CollectStats: 0, NUM_THREADS: 8, NUM_NODES_PER_THREAD: 35, NUM_RUNS: 100
+Execution timed out for NUM_THREADS=8, NUM_NODES_PER_THREAD=35
+----------------------------------------------------------------------------------
+Mode: -f, CollectStats: 0, NUM_THREADS: 10, NUM_NODES_PER_THREAD: 35, NUM_RUNS: 100
+Execution timed out for NUM_THREADS=10, NUM_NODES_PER_THREAD=35
+----------------------------------------------------------------------------------
+Mode: -f, CollectStats: 0, NUM_THREADS: 11, NUM_NODES_PER_THREAD: 35, NUM_RUNS: 100
+Execution timed out for NUM_THREADS=11, NUM_NODES_PER_THREAD=35
+----------------------------------------------------------------------------------
+Mode: -f, CollectStats: 0, NUM_THREADS: 12, NUM_NODES_PER_THREAD: 35, NUM_RUNS: 100
+Execution timed out for NUM_THREADS=12, NUM_NODES_PER_THREAD=35
+----------------------------------------------------------------------------------
+Mode: -f, CollectStats: 0, NUM_THREADS: 2, NUM_NODES_PER_THREAD: 50, NUM_RUNS: 100
+Average Relative time ratio STM vs (f) over 100 runs: .03240
+----------------------------------------------------------------------------------
+Mode: -f, CollectStats: 0, NUM_THREADS: 4, NUM_NODES_PER_THREAD: 50, NUM_RUNS: 100
+Average Relative time ratio STM vs (f) over 100 runs: .09350
+----------------------------------------------------------------------------------
+Mode: -f, CollectStats: 0, NUM_THREADS: 8, NUM_NODES_PER_THREAD: 50, NUM_RUNS: 100
+Execution timed out for NUM_THREADS=8, NUM_NODES_PER_THREAD=50
+----------------------------------------------------------------------------------
+Mode: -f, CollectStats: 0, NUM_THREADS: 10, NUM_NODES_PER_THREAD: 50, NUM_RUNS: 100
+Execution timed out for NUM_THREADS=10, NUM_NODES_PER_THREAD=50
+----------------------------------------------------------------------------------
+Mode: -f, CollectStats: 0, NUM_THREADS: 11, NUM_NODES_PER_THREAD: 50, NUM_RUNS: 100
+Execution timed out for NUM_THREADS=11, NUM_NODES_PER_THREAD=50
+----------------------------------------------------------------------------------
+Mode: -f, CollectStats: 0, NUM_THREADS: 12, NUM_NODES_PER_THREAD: 50, NUM_RUNS: 100
+Execution timed out for NUM_THREADS=12, NUM_NODES_PER_THREAD=50
+----------------------------------------------------------------------------------

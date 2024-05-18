@@ -1,0 +1,9 @@
+pre {
+    background-color: #eee;
+    border: 1px solid #ddd;
+    padding: 10px;
+    font-family: 'Courier New', Courier, monospace;
+    overflow: auto;
+}
+
+
