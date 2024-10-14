@@ -1,8 +1,4 @@
-# A C++ Implementation of the Transactional Locking 2 Algorithm
-
-**Course**: Independent Study (CSCI-799)  
-**Author**: Anurag Choubey  
-**Instructor**: Dr. Matthew Fluet  
+# A C++ Implementation of the Transactional Locking 2 Algorithm 
 
 ## Description
 
