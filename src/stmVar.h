@@ -4,7 +4,6 @@
 // They utilize modern C++ features including std::any for type-safe variable storage.
 
 // Author: Anurag Choubey
-// Instructor: Dr. Matthew Fluet
 
 #ifndef STM_VARIABLE_H
 #define STM_VARIABLE_H
@@ -53,11 +52,24 @@ private:
     std::thread::id lastLockedBy;  // ID of the thread that last locked this variable.
 
 public:
-    StmVariable() = default;  // Default constructor.
-    StmVariable(const T& value) : val(value), lockVersion(0) {}  // Constructor initializing the variable with a value.
+    StmVariable() { // Default constructor.
+        if constexpr (std::is_pointer<T>::value) {
+            val = nullptr;
+        } else {
+            val = T{};
+        }
+        lockVersion = 0;
+    }
+  
+    explicit StmVariable(const T& val) {
+        storeSTM_Var(val);
+        lockVersion = 0; 
+    }
 
-    // Copy constructor to ensure correct copying behavior.
-    StmVariable(const StmVariable& other) : val(other.val) {}
+    StmVariable(const StmVariable<T>& other) {
+        storeSTM_Var(other.loadSTM_Var());
+        lockVersion = 0;  
+    }
 
     // Overload the output stream operator to print the variable's value.
     friend std::ostream& operator<<(std::ostream& os, const StmVariable<T>& var) {
@@ -65,15 +77,24 @@ public:
         return os;
     }
 
-    // Store a new value in this variable, ensuring type safety via std::any_cast.
     inline void storeSTM_Var(const std::any& value) override {
-        try {
-            val = std::any_cast<T>(value);
+    try {
+        if (value.type() == typeid(std::nullptr_t)) {
+            if constexpr (std::is_pointer<T>::value) {
+                val = nullptr;  
+                return;
+            } else {
+                throw std::bad_any_cast();  // nullptr to non-pointer is invalid
+            }
+        }
+        val = std::any_cast<T>(value);
         } catch (const std::bad_any_cast& e) {
-            std::cerr << "Bad cast: " << e.what() << std::endl;
+            std::cerr << "Bad cast in storeSTM_Var: trying to cast "
+                    << value.type().name() << " to " << typeid(T).name() << std::endl;
             throw;
         }
     }
+
 
     // Load the current value of the variable.
     T loadSTM_Var() const {
