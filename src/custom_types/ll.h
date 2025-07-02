@@ -10,7 +10,7 @@
 
 // Define the path to the StmVariable header file
 // Include the definition of StmVariable
-#define STM_VAR_H_PATH "/home/ac2255/phpc/weeks_11_to_15/revised_final/new/src/stmVar.h"
+#define STM_VAR_H_PATH "../stmVar.h"
 #include STM_VAR_H_PATH  
 
 // Template class for Node, designed to be used in a transactional memory system.
@@ -21,19 +21,29 @@ public:
     StmVariable<Node<T>*> next;    // StmVariable wrapping the pointer to the next node, also transactionable.
 
     // Default constructor initializes node with default values.
-    Node() = default;
+    Node() {
+        value.storeSTM_Var(T{});           
+        next.storeSTM_Var(nullptr);        
+    }
+
 
     // Constructor initializing the node's value.
-    Node(const StmVariable<T>& value) : value(value), next(nullptr) {}
+    Node(const StmVariable<T>& val) {
+        value.storeSTM_Var(val.loadSTM_Var());
+        next.storeSTM_Var(nullptr);
+    }
+
+    Node(const T& raw_value) : value(raw_value), next(nullptr) {}
 
     // Copy assignment operator to ensure proper copying in transactional contexts.
     Node& operator=(const Node& other) {
-        if (this != &other) { 
-            // Use transaction-safe methods to store and load values.
+        if (this != &other) {
             value.storeSTM_Var(other.value.loadSTM_Var());
+            next.storeSTM_Var(other.next.loadSTM_Var());
         }
         return *this;
     }
+
 
     // Default destructor is sufficient as StmVariable handles its own memory management.
     ~Node() = default;
@@ -46,7 +56,9 @@ public:
     StmVariable<Node<T>*> head;   // Head of the list, wrapped in a StmVariable for transaction safety.
 
     // Default constructor initializes an empty list.
-    LinkedList() = default;
+    LinkedList() {
+        head.storeSTM_Var(nullptr);
+    }
 
     // Constructor initializing the list's head.
     LinkedList(Node<T>* headNode) : head(StmVariable(headNode)) {}
