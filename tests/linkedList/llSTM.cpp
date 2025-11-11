@@ -1,6 +1,7 @@
 // This program demonstrates the use of Software Transactional Memory (STM) to manage a sorted linked list across multiple threads.
 // It supports operations such as inserting nodes in a sorted manner, removing nodes, and assessing the list's properties (sorted and length).
 // These operations are synchronized using STM, ensuring thread safety without explicit locking mechanisms (except for STM's internal mechanisms).
+
 // Author: Anurag Choubey
 // Instructor: Dr. Matthew Fluet
 
@@ -9,7 +10,7 @@
 #include <vector>       
 #include <iostream>    
 
-#define MACRO_H_PATH "/home/ac2255/phpc/weeks_11_to_15/revised_final/new/src/macro.h"
+#define MACRO_H_PATH "../../src/macro.h"
 #include MACRO_H_PATH  
 
 Statistics myStatCollector;  // Object to collect statistics about STM operations

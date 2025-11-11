@@ -1,0 +1,8 @@
+tests/bank_test/
+*.dSYM
+myProgramAtomic
+myProgramSTM
+myProgramMutex
+myProgramFineGrained
+plots/
+results.csv

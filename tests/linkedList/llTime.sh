@@ -1,12 +1,13 @@
 #!/bin/bash
 
 function print_usage() {
-    echo "Usage: $0 -m|-f arg1 for myprogramSTM, followed by arg2 arg3 for the chosen program and myprogramSTM"
+    echo "Usage: $0 -m|-f|-a arg1 for myprogramSTM, followed by arg2 arg3 for the chosen program and myprogramSTM"
     echo "Options:"
     echo "  arg1  Additional argument for statistics collection for myprogramSTM"
     echo "  arg2 arg3  NUM_THREADS and NUM_NODES_PER_THREAD for the executable and myprogramSTM"
     echo "    -m    Compare './myprogramMutex arg2 arg3' against './myprogramSTM arg1 arg2 arg3'"
     echo "    -f    Compare './myprogramFineGrained arg2 arg3' against './myprogramSTM arg1 arg2 arg3'"
+    echo "    -a    Compare './myprogramAtomic arg2 arg3' against './myprogramSTM arg1 arg2 arg3'"
     echo "Example: $0 -m 1 1000 50"
 }
 
@@ -26,6 +27,9 @@ case $option in
         ;;
     -f)
         executable="./myprogramFineGrained"
+        ;;
+    -a) 
+        executable="./myprogramAtomic"
         ;;
     *)
         echo "Invalid option: $option"

@@ -2,7 +2,7 @@
 
 function print_usage() {
     echo "Usage: $0 -m|-f arg1 arg2 arg3 <num_runs>"
-    echo "  -m|-f  Choose which executable to test against myprogramSTM"
+    echo "  -m|-f|-a  Choose which executable to test against myprogramSTM"
     echo "  arg1  Additional argument for statistics collection for myprogramSTM"
     echo "  arg2 arg3  NUM_THREADS and NUM_NODES_PER_THREAD for the executable and myprogramSTM"
     echo "  num_runs  Number of runs to average"
@@ -16,8 +16,8 @@ fi
 
 option=$1
 
-if ! [[ "$option" == "-m" || "$option" == "-f" ]]; then
-    echo "Error: First argument must be -m or -f"
+if ! [[ "$option" == "-m" || "$option" == "-f" || "$option" == "-a" ]]; then
+    echo "Error: First argument must be -m, -f or -a"
     print_usage
     exit 1
 fi

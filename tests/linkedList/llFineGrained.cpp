@@ -1,7 +1,9 @@
     // This program demonstrates a thread-safe sorted linked list using fine-grained locking.
     // It allows for concurrent modifications (insertions and deletions) while maintaining the list's sorted property.
     // The operations leverage STM varibales for consistency and mutexes for thread safety.
+
     // Author: Anurag Choubey
+    // Instructor: Dr. Matthew Fluet
 
     #include <thread>
     #include <random>
@@ -16,6 +18,7 @@
     #include "../../src/stats.h"
     #include "../../src/custom_types/ll.h"
 
+    std::mutex listMtx; // workaround
 
     // Thread-safe insertion of a node at the list's beginning
     template<typename T>
@@ -30,44 +33,40 @@
 
     template<typename T>
     void sortedPush(LinkedList<T>& list, Node<T>& argNode) {
-        Node<T>* prev = nullptr;
-        Node<T>* current = list.head.loadSTM_Var();
-
-        // Lock the head pointer for safe traversal
-        list.head.acquireLock(std::chrono::milliseconds(100));
-
-        // If list is empty or new node goes at the head
-        if (!current || argNode.value.loadSTM_Var() < current->value.loadSTM_Var()) {
-            argNode.next.storeSTM_Var(current);
+        Node<T>* prev;
+        Node<T>* current;
+        listMtx.lock();
+        
+        if (list.head.loadSTM_Var() == nullptr) {
+            std::cout << "Here" <<std::endl;
             list.head.storeSTM_Var(&argNode);
-            list.head.releaseLock();
+            listMtx.unlock();
             return;
         }
+ 
+        prev = list.head.loadSTM_Var();
+        current = prev->next.loadSTM_Var();
 
-        // Traverse with fine-grained locks on each node
-        while (current) {
-            current->next.acquireLock(std::chrono::milliseconds(100));
-            Node<T>* next = current->next.loadSTM_Var();
+        prev->nodeMtx.lock();
+        listMtx.unlock();
+        if (current) current->nodeMtx.lock();
 
-            if (!next || argNode.value.loadSTM_Var() < next->value.loadSTM_Var()) {
-                // Insert here
-                argNode.next.storeSTM_Var(next);
-                current->next.storeSTM_Var(&argNode);
-                current->next.releaseLock();  // Release current->next
-                if (prev) prev->next.releaseLock();  // Release previous lock if held
-                list.head.releaseLock(); // Release list head lock
-                return;
+        while (current){
+            if (current->value.loadSTM_Var() > argNode.value.loadSTM_Var()){
+                break;
             }
 
-            // Slide window forward: unlock old prev, move current forward
-            if (prev) prev->next.releaseLock();  // Release old prev lock
+            Node<T>* oldPrev = prev;
             prev = current;
-            current = next;
+            current = current->next.loadSTM_Var();
+            oldPrev->nodeMtx.unlock();
+            if (current) current->nodeMtx.lock();
         }
+        argNode.next.storeSTM_Var(current);
+        prev->next.storeSTM_Var(&argNode);
 
-        // Clean up if we reached end
-        if (prev) prev->next.releaseLock();
-        list.head.releaseLock();
+        prev->nodeMtx.unlock();
+        if (current) current->nodeMtx.unlock();
     }
 
 
@@ -87,7 +86,7 @@
         head.releaseLock();  // Unlock the head
     }
 
-    // Repeatedly removes the head node, simulating a transactional operation
+    // Repeatedly removes the head node 15 times, simulating a transactional operation
     template<typename T>
     void popTransaction(LinkedList<T>& list){
         for(int i = 0; i < 15; i++){

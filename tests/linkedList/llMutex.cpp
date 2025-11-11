@@ -1,6 +1,7 @@
 // This program implements a multi-threaded operation on a sorted linked list using variables of the Stm_Variable class.
 // It includes functionalities to insert nodes in a sorted manner, remove nodes, check if the list is sorted, and calculate the list's length.
 // Multiple threads perform these operations concurrently, demonstrating the use of mutexes for synchronization.
+
 // Author: Anurag Choubey
 // Instructor: Dr. Matthew Fluet
 
@@ -10,7 +11,7 @@
 #include <vector>
 #include <iostream>
 
-#define MACRO_H_PATH "/home/ac2255/phpc/weeks_11_to_15/revised_final/new/src/macro.h"
+#define MACRO_H_PATH "../../src/macro.h"
 #include MACRO_H_PATH  
 
 std::mutex listMutex;  // Mutex to ensure thread-safe modifications to the list

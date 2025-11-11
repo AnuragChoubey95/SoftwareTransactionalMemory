@@ -20,6 +20,8 @@ if [ "$MODE_FLAG" = "-m" ]; then
     COMPARE_MSG="Comparing STM vs. Mutex"
 elif [ "$MODE_FLAG" = "-f" ]; then
     COMPARE_MSG="Comparing STM vs. Fine Grained"
+elif [ "$MODE_FLAG" = "-a" ]; then
+    COMPARE_MSG="Comparing STM vs. Atomic"
 else
     echo "Invalid mode flag. Use '-m' for Mutex or '-f' for Fine-Grained"
     exit 1

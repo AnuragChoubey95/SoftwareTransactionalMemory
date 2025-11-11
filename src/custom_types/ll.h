@@ -2,6 +2,7 @@
 // Defines Node and LinkedList templates for use in a transactional memory system,
 // where nodes and links can be modified safely in concurrent environments.
 // These classes use StmVariable for atomic operations on node values and pointers.
+
 // Author: Anurag Choubey
 // Instructor: Dr. Matthew Fluet
 
@@ -19,6 +20,7 @@ class Node {
 public:
     StmVariable<T> value;          // StmVariable wrapping the node's value to enable transactional operations.
     StmVariable<Node<T>*> next;    // StmVariable wrapping the pointer to the next node, also transactionable.
+    std::mutex nodeMtx;
 
     // Default constructor initializes node with default values.
     Node() {
@@ -54,7 +56,7 @@ template<typename T>
 class LinkedList {
 public:
     StmVariable<Node<T>*> head;   // Head of the list, wrapped in a StmVariable for transaction safety.
-
+    
     // Default constructor initializes an empty list.
     LinkedList() {
         head.storeSTM_Var(nullptr);
