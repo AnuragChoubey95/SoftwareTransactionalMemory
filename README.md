@@ -14,23 +14,17 @@ src/
     custom_types/
         ll.h
 tests/
-    bank_test/
-        bankFineGrained.cpp
-        bankMutex.cpp
-        bankSTM.cpp
-        bankTime.sh
-        bankAverage.sh
-        compile.sh
-        getStats.sh
-
     linked_list/
         llFineGrained.cpp
         llMutex.cpp
+        llAtomic.cpp
         llSTM.cpp
         llTime.sh
         llAverage.sh
         compile.sh
         getStats.sh
+        meta_driver.sh
+        plot.py
 data/
     ll_data
     ll.csv
@@ -40,6 +34,8 @@ data/
 The software transactional memory (STM) library developed in this project provides tools for developers to write safer concurrent applications, reducing the complexity associated with traditional lock-based synchronization methods.
 
 The STM library ensures that memory transactions are executed with all-or-nothing semantics, improving the predictability and reliability of application behavior under concurrent execution.
+
+
 
 ## Features
 
@@ -56,24 +52,6 @@ The STM library ensures that memory transactions are executed with all-or-nothin
 
 ## Test Suites for Transactional Memory System
 
-### Bank Simulation Tests
-
-#### Location
-- `tests/bank_test/`
-
-#### Purpose
-These tests simulate banking operations such as account transfers and balance checks using different synchronization mechanisms to manage concurrency. This suite is essential for validating the robustness and efficiency of the transactional memory system in handling real-world-like scenarios.
-
-#### Components Tested
-- `bankFineGrained.cpp`: Implements fine-grained locking.
-- `bankMutex.cpp`: Utilizes mutexes for synchronization.
-- `bankSTM.cpp`: Uses software transactional memory.
-
-#### Utility Scripts
-- `compile.sh`: Compiles the test programs.
-- `bankTime.sh` and `bankAverage.sh`: Measure execution time and compute averages for performance comparison.
-- `getStats.sh`: Gathers and displays statistics from test executions.
-
 ### Linked List Tests
 
 #### Location
@@ -83,6 +61,7 @@ These tests simulate banking operations such as account transfers and balance ch
 Focuses on performing concurrent operations on linked lists, which are used to verify the locking and transaction mechanisms. These tests are crucial for ensuring that basic data structures operate correctly under the transactional memory system. The integrity of linked list structures after being modified by multiple transactions could form the basis of implementing more advanced algorithms based on trees and graphs, which are also pointer based structures.
 
 #### Components Tested
+- `llAtomic.cpp`: Tests atomic CAS update besed mechanism.
 - `llFineGrained.cpp`: Tests fine-grained locking mechanisms.
 - `llMutex.cpp`: Tests mutex-based synchronization strategies.
 - `llSTM.cpp`: Tests the integration and functionality of software transactional memory.
@@ -91,6 +70,7 @@ Focuses on performing concurrent operations on linked lists, which are used to v
 - `compile.sh`: Builds the linked list test executables.
 - `llTime.sh` and `llAverage.sh`: Used for performance measurement and comparative analysis.
 - `getStats.sh`: Collects performance metrics.
+- `meta_driver.sh`: Executes an experiment with varying thread and workload magnitudes, comparing the iplementation of our STM with respect to Mutex, FineGrained and Atomic approaches to the linked list tests.
 
 
 ## Test Results
@@ -100,35 +80,22 @@ Our testing methodology is designed to evaluate the performance and correctness 
 
 ### Testing Approach
 
-1. **Automated Test Scripts:** Each test suite utilizes automated scripts (`compile.sh`, `bankTime.sh`, `bankAverage.sh`, `llTime.sh`, `llAverage.sh`) to build the test cases, execute them, and measure their performance. 
-   
-2. **Concurrency Scenarios:** Multiple levels of concurrency are tested by varying the number of threads (`NUM_THREADS`) and operations (`NUM_NODES_PER_THREAD` or `NUM_LOOPS`) to simulate different load conditions on the system.
 
-3. **Performance Metrics:** We focus on several key performance metrics:
-    - **Execution Time:** Measures how long each test scenario takes, providing insights into the efficiency of our concurrency control mechanisms.
-    - **Correctness:** This is not handled by the test scripts and is instead tested by the test code itself. Ensures that all transactions are processed correctly.
+### Results
 
- Results from multiple runs are collected and analyzed.
+#### CAVEAT (Note to Steven)
 
-### Result Compilation
-
-#### Linked List Tests
+The reader should note that the [previous results](https://github.com/AnuragChoubey95/SoftwareTransactionalMemory/blob/7f1050f4a7d3ed678208e25914838435d4590084/README.md), and our current results diverge by an order of magnitude (10x).
+No change has been made to the transactional memory core implementation (src/), and yet instead of our STM beating the global mutex and fine grained by 10x, it is now ~1x under most thread/load configurations.
 
 <div style="text-align: center;">
-    <img src="stm_vs_mutex.png" width="1250" height="600">
-</div>
-<div style="text-align: center;">
+    <iframe src="tests/linkedList/interactive_plot.html" width="900" height="600"></iframe>
 </div>
 <br>
 
-<div style="text-align: center;">
-    <img src="stm_vs_fine_grained.png" width="1250" height="600">
-</div>
-<div style="text-align: center;">
-</div>
-<br>
 
 ##### Interpretation
+
 
 - For both STMvs.Mutex and STMvs.FineGrained, we see that when the size of input to each thread is <=10, the ratio of time(STM)/time(Mutex) << 1.0, which means our STM implementation outperforms the standard global lock based implementation by an order of magnitude.<br>
 For an input size of 20 nodes per thread, we see that our implementation outperforms the Mutex implementation for upto 10 threads, after which our implementation starts to underperform.<br>
