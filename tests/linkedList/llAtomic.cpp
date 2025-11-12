@@ -53,6 +53,54 @@ void sortedInsert(LinkedList<T>& list, Node<T>* node) {
 }
 
 template<typename T>
+Node<T>* popAtomic(LinkedList<T>& list) {
+    while (true) {
+        Node<T>* oldHead = list.head.load(std::memory_order_acquire);
+        if (!oldHead)
+            return nullptr;
+
+        Node<T>* next = oldHead->next.load(std::memory_order_acquire);
+        if (list.head.compare_exchange_weak(
+                oldHead, next,
+                std::memory_order_acq_rel,
+                std::memory_order_acquire)) {
+            oldHead->next.store(nullptr, std::memory_order_release);
+            return oldHead;
+        }
+    }
+}
+
+
+template<typename T>
+void popTransaction(LinkedList<T>& list) {
+    for (int i = 0; i < 15; i++) {
+        Node<T>* node = popAtomic(list);
+        if (node) delete node;
+    }
+}
+
+template<typename T>
+bool isSorted(const LinkedList<T>& list) {
+    Node<T>* curr = list.head.load(std::memory_order_acquire);
+    if (!curr) return true;
+
+    T currVal = curr->value;
+    Node<T>* next = curr->next.load(std::memory_order_acquire);
+
+    while (next) {
+        T nextVal = next->value;
+        if (nextVal < currVal)
+            return false;
+
+        curr = next;
+        next = curr->next.load(std::memory_order_acquire);
+        currVal = curr->value;
+    }
+    return true;
+}
+
+
+template<typename T>
 void printList(const LinkedList<T>& list) {
     Node<T>* curr = list.head.load(std::memory_order_acquire);
     while (curr) {
@@ -61,6 +109,19 @@ void printList(const LinkedList<T>& list) {
     }
     std::cout << "null\n";
 }
+
+template<typename T>
+int length(const LinkedList<T>& list) {
+    int count = 0;
+    Node<T>* curr = list.head.load(std::memory_order_acquire);
+
+    while (curr) {
+        ++count;
+        curr = curr->next.load(std::memory_order_acquire);
+    }
+    return count;
+}
+
 
 int main(int argc, char* argv[]) {
     if (argc != 3) {
@@ -78,17 +139,31 @@ int main(int argc, char* argv[]) {
     std::mt19937 gen(rd());
     std::uniform_int_distribution<> dis(1, 100);
 
-    for (auto& g : groups)
+    for (std::vector<Node<int>*>& g : groups)
         for (int i = 0; i < num_nodes; i++)
             g.push_back(new Node<int>(dis(gen)));
 
     std::vector<std::thread> threads;
-    for (auto& g : groups)
+    for (std::vector<Node<int>*>& g : groups)
         threads.emplace_back([&list, &g]() {
-            for (auto n : g) sortedInsert(list, n);
+            for (Node<int>* n : g) sortedInsert(list, n);
         });
+
+    threads.emplace_back([&list]() {
+        popTransaction(list);
+    });
 
     for (auto& t : threads) t.join();
 
     printList(list);
+    std::cout << "Sorted: " << isSorted(list) << std::endl;
+    std::cout << "Length: " << length(list) << std::endl;
+
+    for (std::vector<Node<int>*>& g : groups){
+        for (Node<int>* n : g){
+            if (n) delete n;
+        }   
+    }
+        
 }
+
