@@ -50,7 +50,7 @@ The STM library ensures that memory transactions are executed with all-or-nothin
 
 - **Custom Data Types:** Such as linked lists in `custom_types/ll.h`, which are used to demonstrate STM operations in a practical context.
 
-## Test Suites for Transactional Memory System
+## Test for Transactional Memory System
 
 ### Linked List Tests
 
@@ -86,42 +86,42 @@ Our testing methodology is designed to evaluate the performance and correctness 
 #### CAVEAT (Note to Steven)
 
 The reader should note that the [previous results](https://github.com/AnuragChoubey95/SoftwareTransactionalMemory/blob/7f1050f4a7d3ed678208e25914838435d4590084/README.md), and our current results diverge by an order of magnitude (10x).
-No change has been made to the transactional memory core implementation (src/), and yet instead of our STM beating the global mutex and fine grained by 10x, it is now ~1x under most thread/load configurations.
+No change has been made to the transactional memory core implementation (src/), and yet instead of our STM beating the global mutex and fine grained by 10x, it is now ~1x under most thread/load configurations.<br>
+The previous results were generated in a native Linux environment running on a 16 core Intel Xeon system. The current results are derived from running an Ubuntu docker container running on an Apple M2 8 core system. It is intersting to note that when run natively on MacOs, the test harness was hanging on as little as 2 threads! 
+While I do not have the exact cause of such hang as well as the 10x slowdown yet, I currently would like to attribute the slowdown to the umbrella phenomenon of environment drift.
+
+
+##### Interpretation
+
+
+The results can be depicted pictographically below
 
 <div style="text-align: center;">
     <iframe src="tests/linkedList/interactive_plot.html" width="900" height="600"></iframe>
 </div>
 <br>
 
+- We can see from the above figure that for upto 6 threads, on any load on each thread (up to 50 nodes), the STM delivers perfomance comparable (~1x) to Atomic, Mutex as well as fineGrained implementations.
+- Beyond 6 threads, the STM slows down beyond the strainght line connecting (Thread=6, Nodes Per Thread=50) and (Thread=10, Nodes Per Thread=24). The performance degradatio is the most when compared to the atomic implementation and the least when compared to fine grained locking, indicating that atomics demonstrate faster execution unden high contention on the shared data structure.
 
-##### Interpretation
-
-
-- For both STMvs.Mutex and STMvs.FineGrained, we see that when the size of input to each thread is <=10, the ratio of time(STM)/time(Mutex) << 1.0, which means our STM implementation outperforms the standard global lock based implementation by an order of magnitude.<br>
-For an input size of 20 nodes per thread, we see that our implementation outperforms the Mutex implementation for upto 10 threads, after which our implementation starts to underperform.<br>
-We saw that for any number of threads greater than 10 and for input sizes greater than 15, there is a high amount of contention which causes a high number of transaction aborts and restarts. This causes an impedance in the forward progress and hence slows down our STM.
-
-#### Bank Transfer Tests
-
-- Unfortunately, our STM performs poorly in the bank transfer tests, with each test case timing out almost everytime across multiple runs. Even on the cases where the test script does not timeout, our implementation is slower than the global lock and fine-grained lock implementation by a factor ranging between [1,4].
 
 #### Aborts and Restarts
 
-- We observe that for both the linked list as well as bank test cases, the number of aborts and subsequent restarts increases non-linearly if either the number of threads or the size of the input data is increased. This implies high contention. Below is a run of our STM based linked list program tested on 12 threads with different input sizes.
+- We observe that the number of aborts and subsequent restarts increases non-linearly if either the number of threads or the size of the input data is increased. This implies high contention. Below is a run of our STM based linked list program tested on 12 threads with different input sizes.
 
 
 <div style="text-align: center;">
-    <img src="aborts.png" width="650" height="300">
+    <img src="aborts.png" width="750" height="400">
 </div>
 <div style="text-align: center;">
 </div>
 <br>
 
-- It is important to note that the last command did not terminate even after 8 minutes.
+- It is important to note that the last command did not terminate even after 3 minutes.
 
 ## Conclusion
 
-Our implementation outperforms standard locking mechanisms when the size of inputs and total number of threads is low. The performance degenerates when either of the two parameters is increased beyond a particular threshold. Nevertheless, it points us in the direction of exploring more time efficient algorithms for STM implementation as well as algorithms for either reducing transaction rollbacks or guaranteeing their forward progress. 
+Our implementation performs comparably to standard concurrency control mechanisms when the size of inputs and total number of threads is low. The performance degenerates when either of the two parameters is increased beyond a particular threshold. Nevertheless, it points us in the direction of exploring more time efficient algorithms for STM implementation as well as algorithms for either reducing transaction rollbacks or guaranteeing their forward progress. 
 
 ## References
 - Shavit, N., Touitou, D. Software transactional memory. Distrib Comput 10, 99–116 (1997). https://doi.org/10.1007/s004460050028
