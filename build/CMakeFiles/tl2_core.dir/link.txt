@@ -1,0 +1,2 @@
+/usr/bin/ar qc libtl2_core.a CMakeFiles/tl2_core.dir/src/gvc.cpp.o CMakeFiles/tl2_core.dir/src/vlock.cpp.o
+/usr/bin/ranlib libtl2_core.a

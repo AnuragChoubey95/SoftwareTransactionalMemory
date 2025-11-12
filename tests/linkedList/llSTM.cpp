@@ -9,7 +9,7 @@
 #include <vector>       
 #include <iostream>    
 
-#define MACRO_H_PATH "/home/ac2255/phpc/weeks_11_to_15/revised_final/new/src/macro.h"
+#define MACRO_H_PATH "../../src/macro.h"
 #include MACRO_H_PATH  
 
 Statistics myStatCollector;  // Object to collect statistics about STM operations

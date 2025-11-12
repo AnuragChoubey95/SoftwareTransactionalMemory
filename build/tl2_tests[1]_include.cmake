@@ -1,0 +1,5 @@
+if(EXISTS "/Users/anurag_choubey/Documents/CODE/SoftwareTransactionalMemory/build/tl2_tests[1]_tests.cmake")
+  include("/Users/anurag_choubey/Documents/CODE/SoftwareTransactionalMemory/build/tl2_tests[1]_tests.cmake")
+else()
+  add_test(tl2_tests_NOT_BUILT tl2_tests_NOT_BUILT)
+endif()

@@ -19,7 +19,7 @@ class Node {
 public:
     StmVariable<T> value;          // StmVariable wrapping the node's value to enable transactional operations.
     StmVariable<Node<T>*> next;    // StmVariable wrapping the pointer to the next node, also transactionable.
-
+    std::mutex nodeMtx;
     // Default constructor initializes node with default values.
     Node() {
         value.storeSTM_Var(T{});           
