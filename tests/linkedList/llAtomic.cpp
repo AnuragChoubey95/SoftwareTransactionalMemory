@@ -28,18 +28,17 @@ void sortedInsert(LinkedList<T>& list, Node<T>* node) {
             prev = curr;
             curr = curr->next.load(std::memory_order_acquire);
         }
-
+        
         node->next.store(curr, std::memory_order_relaxed);
 
+        Node<T>* expected = curr;
         if (!prev) {
-            Node<T>* expected = curr;
             if (list.head.compare_exchange_weak(
                     expected, node,
                     std::memory_order_acq_rel,
                     std::memory_order_acquire))
                 return;
         } else {
-            Node<T>* expected = curr;
             if (prev->next.compare_exchange_weak(
                     expected, node,
                     std::memory_order_acq_rel,

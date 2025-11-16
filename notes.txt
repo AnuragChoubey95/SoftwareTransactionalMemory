@@ -1,0 +1,3 @@
+Some articles that came in handy
+
+https://en.wikipedia.org/wiki/Type_inference
