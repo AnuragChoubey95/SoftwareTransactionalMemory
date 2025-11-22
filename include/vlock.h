@@ -1,5 +1,6 @@
-// Author: Anurag Choubey
 // vlock.h
+
+// Author: Anurag Choubey
 
 #pragma once
 #include <atomic>

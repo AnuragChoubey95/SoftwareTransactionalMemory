@@ -1,8 +1,8 @@
-// Author: Anurag Choubey
+// vlock.cpp
 
 #include "vlock.h"
 
-alignas(64) std::atomic<uint64_t>* lockMap = new std::atomic<uint64_t>[NUM_STRIPES]{};
+std::atomic<uint64_t>* lockMap = new std::atomic<uint64_t>[NUM_STRIPES]{}; // remember to cleanup upon program exit!!
 
 void vlock_acquire(std::atomic<uint64_t>* lock){
     uint64_t curr = lock->load(std::memory_order_acquire);

@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.10)
-project(SoftwareTransactionalMemory LANGUAGES CXX)
+project(SoftwareTransactionalMemory LANGUAGES C CXX)
 
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -13,11 +13,17 @@ add_compile_options(-Wall -Wextra -Werror -pedantic)
 
 include_directories(${CMAKE_SOURCE_DIR}/include)
 
+# Bring libbloom into the build graph
+add_subdirectory(third_party/libbloom)
+
 # Core STM library
 add_library(tl2_core
     ${CMAKE_SOURCE_DIR}/src/gvc.cpp
     ${CMAKE_SOURCE_DIR}/src/vlock.cpp
 )
+
+# Link libbloom so TL2 core can call bloom filter functions
+target_link_libraries(tl2_core PRIVATE libbloom)
 
 # --- Unit tests ------------------------------------------------------------
 enable_testing()
@@ -31,6 +37,7 @@ add_executable(tl2_tests
 target_link_libraries(tl2_tests
     PRIVATE
         tl2_core
+        libbloom
         GTest::gtest_main
 )
 
