@@ -1,7 +1,5 @@
 // vlock.h
 
-// Author: Anurag Choubey
-
 #pragma once
 #include <atomic>
 #include <cstddef>

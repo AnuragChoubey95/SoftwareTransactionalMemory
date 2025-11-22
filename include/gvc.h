@@ -1,4 +1,5 @@
 // gvc.h
+
 #pragma once
 #include <atomic>
 

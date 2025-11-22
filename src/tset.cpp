@@ -76,8 +76,7 @@ int writeset_lookup(WriteSet* wSet, void* addr, WriteEntry** out){
 
 // Write unit tests for 
 // defensive props,
-// persistence and 
-// type heterogenity
+// type heterogenity, does it even fucking work?
 int writeset_add(WriteSet* wSet, void* addr, size_t size, void* src){
    if (!wset || !wset->entries || 
         !addr || !src || size == 0) return 0;
@@ -87,6 +86,10 @@ int writeset_add(WriteSet* wSet, void* addr, size_t size, void* src){
 
     if (bloom_res == 1){
         WriteEntry* e = nullptr;
+        if (writeset_lookup(wSet, addr, size, src) == 1){
+            e->size = size;
+            
+        }
     }
 
 
