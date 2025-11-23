@@ -102,7 +102,7 @@ The results can be depicted pictographically below
 <br>
 
 - We can see from the above figure that for upto 6 threads, on any load on each thread (up to 50 nodes), the STM delivers perfomance comparable (~1x) to Atomic, Mutex as well as fineGrained implementations.
-- Beyond 6 threads, the STM slows down beyond the strainght line connecting (Thread=6, Nodes Per Thread=50) and (Thread=10, Nodes Per Thread=24). The performance degradatio is the most when compared to the atomic implementation and the least when compared to fine grained locking, indicating that atomics demonstrate faster execution unden high contention on the shared data structure.
+- Beyond 6 threads, the STM slows down beyond the strainght line connecting (Thread=6, Nodes Per Thread=50) and (Thread=10, Nodes Per Thread=24). The performance degradation is the most when compared to the mutex implementation and the least when compared to fine grained locking, indicating that global locking demonstrates faster execution unden high contention on the shared data structure.
 
 
 #### Aborts and Restarts
