@@ -4,6 +4,7 @@
 #pragma once 
 
 #include <atomic>
+#include "vlock.h"
 #include "bloom.h"
 #include <cstddef>
 #include <cstdint>
