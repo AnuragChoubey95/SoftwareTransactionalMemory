@@ -8,11 +8,11 @@ void vlock_acquire(std::atomic<uint64_t>* lock){
     uint64_t curr = lock->load(std::memory_order_acquire);
 
     while(true){
-        if (curr & 1ULL){
+        if (curr & 1ULL){ // if lowest bit == 1
             curr = lock->load(std::memory_order_acquire);
             continue;
         }
-        uint64_t desired = curr | 1ULL;
+        uint64_t desired = curr | 1ULL; // set lowest bit = 1 (acquisition)
         if (lock->compare_exchange_weak(curr, desired,
                                         std::memory_order_acquire,
                                         std::memory_order_relaxed)){

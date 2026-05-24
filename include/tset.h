@@ -1,49 +1,50 @@
 // tset.h
+// Author: Anurag Choubey
 
+#pragma once 
+
+#include <atomic>
 #include "bloom.h"
+#include <cstddef>
+#include <cstdint>
 
-#define R_INIT 16
-#define W_INIT 32
-#define INLINE_CAP = 32;
-
-struct ReadEntry{
-    void* varAddr;
-    std::atomic<uint64_t>* lock;
-};
+#define WS_SLOTS 2048
+#define RS_MAX 2048
+#define INLINE_CAP 128
+#define BLOOM_BYTES 1224 //(1024 entries, 1% FPR, rounded to 8-byte boundary)
 
 struct WriteEntry{
-    void* varAddr;
     std::atomic<uint64_t>* lock;
     size_t size;
-
-    char inlineBuf[INLINE_CAP];
-    char* buffer;
-    size_t bufCapacity;
+    char buf[INLINE_CAP];
 };
 
-struct ReadSet {
-    ReadEntry* entries;
-    size_t count;
-    size_t capacity;
+struct WriteSet{
+    char* base;
+    uint16_t count;
+    struct bloom bf;
 };
 
-struct WriteSet {
-    WriteEntry* entries;
-    size_t count;
-    size_t capacity;
-
-    struct bloom bf;   
+struct ReadEntry{
+    std::atomic<uint64_t>* lock;
 };
 
-int readset_init(ReadSet* rSet);
-int writeset_init(WriteSet* wSet);
+struct ReadSet{
+    char* base;
+    uint16_t count;
+};
 
-int readset_reset(ReadSet* rSet);
-int writeset_reset(WriteSet* wSet);
+int writeset_init(WriteSet* set, char* slice_base);
+int writeset_reset(WriteSet* set);
+int writeset_add(WriteSet* set, void* addr, void* src, size_t size);
+int writeset_lookup(WriteSet* set, void* addr, WriteEntry** entry);
+void** writeset_keys(WriteSet* set);
+WriteEntry* writeset_values(WriteSet* set);
 
-int writeset_add(WriteSet* wSet, void* addr, size_t size, void* src);
-int writeset_lookup(WriteSet* wSet, void* addr, WriteEntry** out);
-
+int readset_init(ReadSet* set, char* slice_base);
+int readset_reset(ReadSet* set);
+int readset_add(ReadSet* set, std::atomic<uint64_t>* lock);
+int readset_validate(ReadSet* set, uint64_t rv);
 
 
 
