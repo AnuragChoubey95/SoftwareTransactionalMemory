@@ -2,12 +2,11 @@
 #include <cstring>
 #include "tset.h"
 #include "vlock.h"
-
-static const size_t WS_ARENA_SIZE = WS_SLOTS * sizeof(void*) + WS_SLOTS * sizeof(WriteEntry);
+#include "arena.h"
 
 TEST(WriteSet, AddThenLookupRecoversBufferedData) {
     vlock_init();
-    char* arena = new char[WS_ARENA_SIZE]();
+    char* arena = new char[SLICE_SIZE]();
     WriteSet ws;
     writeset_init(&ws, arena);
 
@@ -41,8 +40,7 @@ TEST(WriteSet, AddThenLookupRecoversBufferedData) {
 
 TEST(ReadSet, ValidateFailsWhenVersionAdvances) {
     vlock_init();
-    static const size_t RS_ARENA_SIZE = RS_MAX * sizeof(ReadEntry);
-    char* arena = new char[RS_ARENA_SIZE]();
+    char* arena = new char[SLICE_SIZE]();
     ReadSet rs;
     readset_init(&rs, arena);
 
